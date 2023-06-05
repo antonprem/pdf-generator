@@ -2,6 +2,15 @@ import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 
+import { GeneratePDF } from "./pdfkit/main";
+
+interface PDFData {
+  header1: JSON;
+  header2: JSON;
+  content: JSON;
+  footer: JSON;
+}
+
 const app = express();
 const port = 3000;
 
@@ -21,14 +30,15 @@ app.post("/submit-form", (req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  // Handle the form data here
-  const header = req.headers;
+
   const content = req.body;
 
-  // Perform necessary processing or generate the PDF here
-
   console.log(content);
-  // Return a response
+
+  console.log("-------------------");
+
+  GeneratePDF(content);
+
   res.send("Form submission successful");
 });
 

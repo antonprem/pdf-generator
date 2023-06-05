@@ -50,7 +50,9 @@ Purkersdorf&lt;br&gt;
 
       <label for="footer">Footer:</label>
       <textarea id="footer" name="footer" required>
-© 2023 Arbitrary Company. All rights reserved.</textarea
+Firma Wieshofer & Soder OG CEO Markus Wieshofer • UID ATU 62959604 
+FN Gerichtsstand Innsbruck 281638zSparkasse Fieberbrunn 
+IBAN AT91 2050 5004 0000 3604 • BIC SPKIAT2K</textarea
       ><br /><br />
 
       <input type="submit" value="Generate PDF" />
@@ -105,12 +107,11 @@ Purkersdorf&lt;br&gt;
       document
         .getElementById("pdfForm")
         .addEventListener("submit", function (event) {
-          event.preventDefault();
-
           const myContent = tinymce.get("content").getContent();
           document.getElementById("content").value = myContent;
 
           SubmitForm();
+          event.preventDefault();
         });
     </script>
   </body>
