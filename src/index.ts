@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 
+import { GeneratePDF } from "./puppeteer/main";
+
 const app = express();
 const port = 3000;
 
@@ -28,7 +30,9 @@ app.post("/submit-form", (req: Request, res: Response) => {
   // Perform necessary processing or generate the PDF here
 
   console.log(content);
-  // Return a response
+
+  GeneratePDF(content, "output");
+
   res.send("Form submission successful");
 });
 
