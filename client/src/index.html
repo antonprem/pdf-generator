@@ -15,11 +15,11 @@
   <body>
     <h2>Generate PDF</h2>
     <form id="pdfForm" enctype="application/json">
-      <label for="logo">Logo:</label>
+      <!-- <label for="logo">Logo:</label>
       <input type="file" id="logo" name="logo" />
       <br /><br />
       <img id="preview" alt="Preview Image" width="150" height="150" />
-      <br /><br />
+      <br /><br /> -->
 
       <label for="header1">Header 1:</label>
       <textarea id="header1" name="header1" required>
@@ -56,7 +56,7 @@ Purkersdorf&lt;br&gt;
       <input type="submit" value="Generate PDF" />
     </form>
 
-    <script>
+    <!-- <script>
       const logoInput = document.getElementById("logo");
       const previewImg = document.getElementById("preview");
 
@@ -70,7 +70,7 @@ Purkersdorf&lt;br&gt;
 
         reader.readAsDataURL(file);
       });
-    </script>
+    </script> -->
 
     <script>
       tinymce.init({
