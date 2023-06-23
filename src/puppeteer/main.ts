@@ -80,28 +80,6 @@ async function createPdf(header1, header2, footer, content, styles = {}) {
   `;
 
   await page.setContent(htmlTemplate);
-  await page.addStyleTag({
-    content: `
-    
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      margin: 0;
-    }
-
-    main {
-      flex: 1;
-    }
-    footer {
-      text-decoration: underline;
-      flex-shrink: 0;
-      position: sticky;
-      bottom: 0;
-      background-color: #f5f5f5;
-      padding: 10px;
-    }`,
-  });
   const pdfBuffer = await page.pdf(options);
 
   await browser.close();
