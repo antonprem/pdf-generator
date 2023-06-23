@@ -34,56 +34,74 @@ async function createPdf(header1, header2, footer, content, styles = {}) {
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
+  const headerTemplate = `
+  <style>
+  .header {
+    padding: 20px; 
+    width: 100%; 
+    font-size: 12px; 
+    display: flex; 
+    justify-content: space-between;
+  }
+  </style>
+  <div class="header">
+    <div class="header1">${header1}</div>
+    <div class="header2">${header2}</div>
+  </div>`;
+
+  const footerTemplate = `<style>
+  .footer {
+    padding: 20px; width: 100%; font-size: 12px; text-align: center;
+  }
+  </style><div class="footer">${footer}</div>`;
+
   const options: any = {
     format: "A4",
+    displayHeaderFooter: true,
+    headerTemplate,
+    footerTemplate,
+    margin: {
+      top: "6cm",
+      bottom: "2cm",
+    },
   };
 
   const htmlTemplate = `
-    <html>
-      <head>
-        <title>PDF Generation</title>
-        <style>
-          /* Header styles */
-          .header {
-            display: flex;
-            justify-content: space-between;
-          }
-
-          /* Footer styles */
-          .footer {
-            text-align: center;
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-          }
-
-          /* Content styles */
-          .content {
-            margin-top: 100px; /* Adjust as needed */
-          }
-
-          body {
-            padding: 2rem;
-          }
-
-          ${styles}
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <div class="header1">${header1}</div>
-          <div class="header2">${header2}</div>
-        </div>
-
-        <div class="content">${content}</div>
-
-        <div class="footer">${footer}</div>
-      </body>
-    </html>
+  <style>
+    /* Content styles */
+    body {
+      padding: 0 2rem;
+    }
+    ${styles}
+  </style>
+  <body>
+    <div class="content">${content}</div>
+  </body>
   `;
 
   await page.setContent(htmlTemplate);
+  await page.addStyleTag({
+    content: `
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    main {
+      flex: 1;
+    }
+    footer {
+      text-decoration: underline;
+      flex-shrink: 0;
+      position: sticky;
+      bottom: 0;
+      background-color: #f5f5f5;
+      padding: 10px;
+    }`,
+  });
   const pdfBuffer = await page.pdf(options);
 
   await browser.close();
